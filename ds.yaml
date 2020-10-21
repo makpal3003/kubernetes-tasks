@@ -3,16 +3,22 @@ kind: DaemonSet
 metadata:
   name: ubuntu-ds
   labels:
-    k8s-app: ubuntu
+    app: ubuntu-ds
 spec:
   selector:
     matchLabels:
-      name: ubuntu
+      app: ubuntu-ds-pod
   template:
     metadata:
       labels:
-        name: ubuntu
+        app: ubuntu-ds-pod
     spec:
       containers:
-      - name: ubuntu
-        image: ubuntu
+      - image: ubuntu
+        name: ubuntu
+        command: ["/bin/bash", "-c"]
+        args:
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
